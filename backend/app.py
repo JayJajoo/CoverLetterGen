@@ -62,7 +62,6 @@ def register():
 def login():
     data = request.get_json()
     user = mongo.db.users.find_one({"email": data["email"]})
-    print(data)
     if not user or not check_password_hash(user["password"], data["password"]):
         return jsonify({"msg": "Invalid credentials"}), 401
     access_token = create_access_token(identity=str(user["_id"]))

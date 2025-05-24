@@ -1,9 +1,21 @@
 class Resume {
     static isDownloading = false;
+    static isInitialized = false;
 
     static async init() {
-        await this.checkResumeStatus();
-        this.setupEventListeners();
+        try {
+            // Always check resume status on init, even if already initialized
+            await this.checkResumeStatus();
+            
+            // Only set up event listeners once
+            if (!this.isInitialized) {
+                this.setupEventListeners();
+                this.isInitialized = true;
+            }
+        } catch (error) {
+            console.error('Failed to initialize Resume:', error);
+            this.showError('Failed to initialize. Please refresh the page.');
+        }
     }
 
     static showError(message) {
@@ -145,30 +157,52 @@ class Resume {
     }
 
     static async deleteResume() {
+        const deleteButton = document.getElementById('delete-resume');
         try {
+            deleteButton.disabled = true;
             this.clearMessages();
+            
             const token = await Auth.getToken();
+            if (!token) {
+                throw new Error('No authentication token found');
+            }
+
             const response = await fetch(`${API_URL}/resume/delete`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch (e) {
+                throw new Error('Invalid response from server');
+            }
             
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to delete resume');
             }
 
+            // Only update UI after successful deletion
             this.updateResumeUI(null);
+            this.showSuccess('Resume deleted successfully');
         } catch (error) {
             console.error('Failed to delete resume:', error);
             this.showError(error.message || 'Failed to delete resume. Please try again.');
+            // Re-check status to ensure UI is in sync
+            await this.checkResumeStatus();
+        } finally {
+            deleteButton.disabled = false;
         }
     }
 
     static async checkResumeStatus() {
         try {
             const token = await Auth.getToken();
+            if (!token) {
+                throw new Error('No authentication token found');
+            }
+
             const response = await fetch(`${API_URL}/resume/status`, {
                 method: 'GET',
                 headers: { 
@@ -188,11 +222,17 @@ class Resume {
                 throw new Error(data.message || 'Failed to check resume status');
             }
 
-            this.updateResumeUI(data.filename);
+            // Only update UI if we got a valid response and filename exists
+            if (data && typeof data.filename === 'string' && data.filename) {
+                this.updateResumeUI(data.filename);
+            } else {
+                // If no filename or null/undefined/empty, treat as no resume
+                this.updateResumeUI(null);
+            }
         } catch (error) {
             console.error('Failed to check resume status:', error);
             this.showError(error.message || 'Failed to check resume status. Please try again.');
-            // Don't disable UI on status check failure
+            // Reset UI state when there's an error
             this.updateResumeUI(null);
         }
     }
@@ -203,11 +243,11 @@ class Resume {
         const downloadButton = document.getElementById('download-resume');
         const deleteButton = document.getElementById('delete-resume');
 
-        uploadButton.addEventListener('click', () => {
-            fileInput.click();
+        uploadButton?.addEventListener('click', () => {
+            fileInput?.click();
         });
 
-        fileInput.addEventListener('change', async (e) => {
+        fileInput?.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
                 if (file.type === 'application/pdf') {
@@ -216,17 +256,15 @@ class Resume {
                     this.showError('Please select a PDF file');
                 }
             }
-            fileInput.value = '';
+            if (fileInput) fileInput.value = '';
         });
 
-        downloadButton.addEventListener('click', () => {
+        downloadButton?.addEventListener('click', () => {
             this.downloadResume();
         });
 
-        deleteButton.addEventListener('click', async () => {
-            if (confirm('Are you sure you want to delete your resume?')) {
-                await this.deleteResume();
-            }
+        deleteButton?.addEventListener('click', () => {
+            this.deleteResume();
         });
     }
 }

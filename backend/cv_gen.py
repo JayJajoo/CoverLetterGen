@@ -1,13 +1,15 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
-from langchain_core.messages import SystemMessage,HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import WebBaseLoader
-from prompts import ctmp3,code3,code4,ctmp4,combined_resume_content
-from web_automation import scrape_linkedIn,scrape_NUworks
+from prompts import ctmp3, code3, code4, ctmp4, combined_resume_content
+from web_automation import scrape_linkedIn, scrape_NUworks
 import asyncio
+from langchain_core.globals import set_verbose
 
 load_dotenv()
+set_verbose(False)
 
 def generate_cv(link=None,resume_content=None,user_id=None,job_description=None):
     llm = ChatOpenAI(model="gpt-4.1-nano",temperature=0.7)

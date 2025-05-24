@@ -9,7 +9,7 @@ class Auth {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.ok) {
-                    this.showView('main-view');
+                    await this.showMainView();
                     return true;
                 }
             } catch (error) {
@@ -36,7 +36,7 @@ class Auth {
             }
 
             await this.setToken(data.access_token);
-            this.showView('main-view');
+            await this.showMainView();
             return true;
         } catch (error) {
             console.error('Login error:', error);
@@ -61,7 +61,7 @@ class Auth {
             }
 
             await this.setToken(data.access_token);
-            this.showView('main-view');
+            await this.showMainView();
             return true;
         } catch (error) {
             console.error('Signup error:', error);
@@ -114,6 +114,13 @@ class Auth {
             errorElement.textContent = '';
             errorElement.classList.remove('show');
         }
+    }
+
+    static async showMainView() {
+        this.showView('main-view');
+        // Initialize Resume and CoverLetter components
+        await Resume.init();
+        await CoverLetter.init();
     }
 }
 
