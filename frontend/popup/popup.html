@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CV Cover Letter Generator</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="app">
+        <div id="login-view" class="view">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div id="login-error" class="error-message"></div>
+            <p>Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+        </div>
+
+        <div id="signup-view" class="view hidden">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <input type="password" id="signup-password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <div id="signup-error" class="error-message"></div>
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+
+        <div id="main-view" class="view hidden">
+            <div class="resume-section">
+                <h3>Your Resume</h3>
+                <div id="resume-status">
+                    <p id="resume-filename">No resume uploaded</p>
+                    <div class="resume-actions">
+                        <button id="upload-resume" class="primary">Upload Resume</button>
+                        <button id="download-resume" class="secondary" disabled>Download</button>
+                        <button id="delete-resume" class="danger" disabled>Delete</button>
+                    </div>
+                </div>
+                <div id="resume-error" class="error-message"></div>
+                <div id="resume-success" class="success-message"></div>
+                <input type="file" id="resume-file" accept=".pdf" style="display: none;">
+            </div>
+
+            <div class="cover-letter-section">
+                <h3>Generate Cover Letter</h3>
+                <div class="input-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="use-url-toggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Use current page URL</span>
+                </div>
+                <div id="url-input" class="url-section">
+                    <input type="text" id="job-url" placeholder="Job posting URL (auto-filled)" readonly>
+                </div>
+                <div id="description-input" class="description-section hidden">
+                    <textarea id="job-description" placeholder="Paste job description here" rows="5"></textarea>
+                </div>
+                <div class="action-buttons">
+                    <button id="generate-cover-letter" class="primary" disabled>Generate Cover Letter</button>
+                    <button id="download-cover-letter" class="secondary" disabled>Download Cover Letter</button>
+                </div>
+                <div id="cover-letter-error" class="error-message"></div>
+                <div id="cover-letter-success" class="success-message"></div>
+            </div>
+
+            <button id="logout" class="text-button">Logout</button>
+        </div>
+    </div>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/resume.js"></script>
+    <script src="../scripts/coverLetter.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html> 

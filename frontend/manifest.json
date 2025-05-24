@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "CV Cover Letter Generator",
+  "version": "1.0",
+  "description": "Generate customized cover letters based on your resume",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  }
+} 

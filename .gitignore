@@ -1,0 +1,98 @@
+# Environment Variables
+backend/.env
+backend/.env.local
+backend/.env.*.local
+backend/.env.development
+backend/.env.test
+backend/.env.production
+.env
+.env.*
+
+# Chrome Extension Development
+*.pem
+*.crx
+*.zip
+
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# System Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+
+# Production build files
+/build
+/dist
+
+# Misc
+.cache/
+.temp/
+.tmp/
+*.bak
+*.tmp
+*~
+
+# API keys and secrets
+*.key
+backend/credentials.json
+backend/client_secrets.json
+backend/token.json
+backend/config.json
+backend/secrets.json
+
+# Local state files
+backend/linkedin_state.json
+backend/nuworks_state.json
