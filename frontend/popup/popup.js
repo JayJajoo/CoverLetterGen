@@ -33,7 +33,6 @@ class PopupManager {
     }
 }
 
-// Initialize the popup
 document.addEventListener('DOMContentLoaded', () => {
     PopupManager.init();
 }); 

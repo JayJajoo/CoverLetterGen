@@ -33,7 +33,7 @@ async def login_linkedIn():
 
 async def scrape_NUworks(link):
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(storage_state=f"{current_dir}/nuworks_state.json")
         page = await context.new_page()
         await page.goto(link)
