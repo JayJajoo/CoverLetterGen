@@ -1,0 +1,15 @@
+flask==3.0.2
+flask-cors==4.0.0
+flask-jwt-extended==4.6.0
+flask-pymongo==2.3.0
+pymongo==4.6.1
+python-dotenv==1.0.1
+Werkzeug==3.0.1
+PyPDF2==3.0.1
+langchain-openai==0.0.5
+langchain-core==0.1.27
+langchain-community==0.0.24
+playwright==1.42.0
+python-docx==1.1.0
+gunicorn==21.2.0
+openai==1.12.0 
