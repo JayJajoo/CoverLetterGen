@@ -58,7 +58,7 @@ async def scrape_linkedIn(link):
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(storage_state=f"{current_dir}/linkedin_state.json")
         page = await context.new_page()
-        await page.goto(link)
+        await page.goto(link,timeout=120000)
         jd = await page.locator("div.jobs-search__job-details--wrapper").all_inner_texts()
         await browser.close()
         return jd[0]
