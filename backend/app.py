@@ -266,9 +266,9 @@ def download_resume():
     except Exception as e:
         return jsonify({"error": f"Failed to download resume: {str(e)}"}), 500
 
-@app.route("/health")
+@app.route("/health",methods=["GET"])
 def health_check():
     return jsonify(status="ok", message="Service is healthy"), 200
 
 if __name__ == '__main__':
-    app.run(debug=True,host="0.0.0.0",port=5000,use_debugger=True)
+    app.run(debug=True,host="0.0.0.0",port=5000,use_debugger=True,threaded=False)

@@ -119,7 +119,6 @@ class Auth {
 
     static async showMainView() {
         this.showView('main-view');
-        // Initialize Resume and CoverLetter components
         await Resume.init();
         await CoverLetter.init();
     }
