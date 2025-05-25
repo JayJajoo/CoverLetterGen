@@ -65,4 +65,4 @@ async def scrape_linkedIn(link):
         return jd[0]
     
 # asyncio.run(login_linkedIn())
-# asyncio.run(login_NUWorks())
+asyncio.run(login_NUWorks())
