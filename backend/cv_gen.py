@@ -35,7 +35,6 @@ def generate_cv(link=None,resume_content=None,user_id=None,job_description=None)
         cv = llm.invoke(prompt)
         exec(cv.content)
 
-
 # template = ChatPromptTemplate.from_messages([
 #     ("system",ctmp3),
 #     ("user","Retrun the code starting from import statements till end with all the 3 paras mentioned and infomation filled.")

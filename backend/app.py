@@ -32,7 +32,6 @@ jwt = JWTManager(app)
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
-    print(current_user)
     return jsonify({"msg": "You are logged in", "user_id": current_user}), 200
 
 
@@ -161,6 +160,8 @@ def save_cover_letter_to_user(user_id, cover_letter_path):
             "cover_letter_filename": cover_letter_path
         }}
     )
+    if os.path.exists(cover_letter_path):
+        os.remove(cover_letter_path)
 
 
 def extract_text_from_pdf_bytes(pdf_bytes):
@@ -269,5 +270,6 @@ if __name__ == '__main__':
     app.run(host='127.0.0.1', 
             port=5000, 
             debug=True,
-            use_reloader=True,
-            threaded=True)
+            # use_reloader=False,
+            # threaded=True
+            )

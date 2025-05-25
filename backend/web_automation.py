@@ -9,7 +9,7 @@ current_dir = os.path.dirname(current_file_path)
 
 async def login_NUWorks():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)  
+        browser = await p.chromium.launch(headless=False)  
         context = await browser.new_context()
         page = await context.new_page()
 
@@ -63,4 +63,4 @@ async def scrape_linkedIn(link):
         await browser.close()
         return jd[0]
     
-# asyncio.run(login_NUWorks())
+# asyncio.run(scrape_NUworks(link="https://northeastern-csm.symplicity.com/students/app/jobs/detail/84c420c5cbfd0cbb716e9f6366fff702"))
