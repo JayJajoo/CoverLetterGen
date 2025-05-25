@@ -13,3 +13,4 @@ playwright
 python-docx
 gunicorn
 openai
+bs4
