@@ -94,5 +94,5 @@ backend/config.json
 backend/secrets.json
 
 # Local state files
-backend/linkedin_state.json
-backend/nuworks_state.json
+# backend/linkedin_state.json
+# backend/nuworks_state.json
