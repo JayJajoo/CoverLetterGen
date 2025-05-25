@@ -1,9 +1,15 @@
 class CoverLetter {
     static isDownloading = false;
+    static isInitialized = false;
+    static isGenerating = false;
 
     static async init() {
+        if (this.isInitialized) {
+            return;
+        }
         this.setupEventListeners();
         await this.getCurrentTabUrl();
+        this.isInitialized = true;
     }
 
     static async getCurrentTabUrl() {
@@ -77,10 +83,16 @@ class CoverLetter {
     }
 
     static async generateCoverLetter() {
+        // Prevent multiple simultaneous generations
+        if (this.isGenerating) {
+            return;
+        }
+
         const generateButton = document.getElementById('generate-cover-letter');
         const downloadButton = document.getElementById('download-cover-letter');
         
         try {
+            this.isGenerating = true;
             this.clearMessages();
             const token = await Auth.getToken();
             const useUrl = document.getElementById('use-url-toggle').checked;
@@ -126,6 +138,7 @@ class CoverLetter {
             this.showError(error.message || 'Failed to generate cover letter. Please try again.');
             downloadButton.disabled = true;
         } finally {
+            this.isGenerating = false;
             generateButton.disabled = false;
             generateButton.textContent = 'Generate Cover Letter';
         }
@@ -186,20 +199,24 @@ class CoverLetter {
         const toggleSwitch = document.getElementById('use-url-toggle');
         const jobDescriptionInput = document.getElementById('job-description');
 
+        // Remove any existing event listeners (if any)
+        generateButton.replaceWith(generateButton.cloneNode(true));
+        const newGenerateButton = document.getElementById('generate-cover-letter');
+
         toggleSwitch.addEventListener('change', (e) => {
             this.updateInputVisibility(e.target.checked);
         });
 
         jobDescriptionInput.addEventListener('input', (e) => {
-            generateButton.disabled = !e.target.value.trim();
+            newGenerateButton.disabled = !e.target.value.trim();
         });
 
-        generateButton.addEventListener('click', async () => {
+        newGenerateButton.addEventListener('click', async () => {
             await this.generateCoverLetter();
         });
 
-        downloadButton.addEventListener('click', async () => {
-            await this.downloadCoverLetter();
+        downloadButton.addEventListener('click', () => {
+            this.downloadCoverLetter();
         });
     }
 }

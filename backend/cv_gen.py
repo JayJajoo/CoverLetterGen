@@ -17,6 +17,7 @@ def generate_cv(link=None,resume_content=None,user_id=None,job_description=None)
     if job_description==None:
         if link.__contains__("www.linkedin.com"):
             jd = asyncio.run(scrape_linkedIn(link=link))
+            print(jd)
         elif link.__contains__("northeastern-csm.symplicity.com"):
             jd = asyncio.run(scrape_NUworks(link=link))
         else:  

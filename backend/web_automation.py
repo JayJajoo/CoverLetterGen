@@ -33,7 +33,7 @@ async def login_linkedIn():
 
 async def scrape_NUworks(link):
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(storage_state=f"{current_dir}/nuworks_state.json")
         page = await context.new_page()
         await page.goto(link)
@@ -55,12 +55,14 @@ async def scrape_NUworks(link):
 
 async def scrape_linkedIn(link):
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(storage_state=f"{current_dir}/linkedin_state.json")
         page = await context.new_page()
         await page.goto(link,timeout=120000)
         jd = await page.locator("div.jobs-search__job-details--wrapper").all_inner_texts()
         await browser.close()
+        print(jd)
         return jd[0]
     
-# asyncio.run(scrape_NUworks(link="https://northeastern-csm.symplicity.com/students/app/jobs/detail/84c420c5cbfd0cbb716e9f6366fff702"))
+# asyncio.run(login_linkedIn())
+# asyncio.run(login_NUWorks())
